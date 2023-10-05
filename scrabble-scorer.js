@@ -33,13 +33,20 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
-};
+   userInput = input.question("Let's play some scrabble! Enter a word:");
+   console.log(oldScrabbleScorer(userInput));
+}
 
-let simpleScorer;
+function simpleScorer (word) {
+   console.log(word.length)
+   return word.length;
+}
 
-let vowelBonusScorer;
-
+function vowelBonusScorer (word) {
+   let array = word.split("");
+   
+}
+vowelBonusScorer("Pineapple");
 let scrabbleScorer;
 
 const scoringAlgorithms = [];
