@@ -12,6 +12,24 @@ const oldPointStructure = {
   10: ['Q', 'Z']
 };
 
+let scoringSystem1 = {
+   name: "Old Scrabble",
+   description: "The traditional scoring system",
+   scoringFunction: oldScrabbleScorer
+};
+
+let scoringSystem2 = {
+   name: "Simple Scorer",
+   description: "Each letter is worth one point",
+   scoringFunction: simpleScorer
+};
+
+let scoringSystem3 = {
+   name: "Vowel Bonus Scorer",
+   description: "Vowels are worth 3 points, all other letters are worth 1",
+   scoringFunction: vowelBonusScorer
+}
+
 function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
 	let letterPoints = "";
@@ -34,33 +52,57 @@ function oldScrabbleScorer(word) {
 
 function initialPrompt() {
    userInput = input.question("Let's play some scrabble! Enter a word:");
-   console.log(oldScrabbleScorer(userInput));
+   return userInput;
 }
 
 function simpleScorer (word) {
-   console.log(word.length)
+   console.log(`${word.length} is your score`);
    return word.length;
 }
 
 function vowelBonusScorer (word) {
-   let array = word.split("");
-   
+   let array = word.toLowerCase().split("");
+   let pointTotal = 0;
+   for (let i = 0; i < array.length; i++) {
+      if (array[i] === "a" || array[i] === "e" || array[i] === "i" || array[i] === "o" || array[i] === "u") {
+         pointTotal += 3;
+      }
+      else {
+         pointTotal++;
+      }
+   }
+   return pointTotal;
 }
-vowelBonusScorer("Pineapple");
+
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
+const scoringAlgorithms = [scoringSystem3, scoringSystem2, scoringSystem1];
 
-function scorerPrompt() {}
+function scorerPrompt(word) {
+   console.log("What scoring system would you like to use?\n\n");
+   console.log("0 - Simple: One point per character");
+   console.log("1 - Vowel Bonus: Vowels are worth 3 points");
+   console.log("2 - Scrabble: Uses the scrabble scoring system");
+   userInput = input.question("What scoring system would you like to use? ");
+   if (userInput === "0") {
+      console.log(`Your point total is ${simpleScorer(word)}`);
+   } else if (userInput === "1") {
+      console.log(`Your point total is ${vowelBonusScorer(word)}`);
+   } else if (userInput === "2") {
+      console.log(`${oldScrabbleScorer(word)}`);
+   }
+   
+};
 
 function transform() {};
 
 let newPointStructure;
 
 function runProgram() {
-   initialPrompt();
-   
+   scorerPrompt(initialPrompt());
 }
+
+
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
