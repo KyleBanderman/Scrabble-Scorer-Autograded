@@ -13,22 +13,24 @@ const oldPointStructure = {
 };
 
 let scoringSystem1 = {
-   name: "Old Scrabble",
+   name: "New Scrabble",
    description: "The traditional scoring system",
-   scoringFunction: oldScrabbleScorer
+   scorerFunction: scrabbleScorer
 };
 
 let scoringSystem2 = {
    name: "Simple Scorer",
    description: "Each letter is worth one point",
-   scoringFunction: simpleScorer
+   scorerFunction: simpleScorer
 };
 
 let scoringSystem3 = {
    name: "Vowel Bonus Scorer",
    description: "Vowels are worth 3 points, all other letters are worth 1",
-   scoringFunction: vowelBonusScorer
+   scorerFunction: vowelBonusScorer
 }
+
+const scoringAlgorithms = [scoringSystem2, scoringSystem3, scoringSystem1];
 
 function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
@@ -56,7 +58,6 @@ function initialPrompt() {
 }
 
 function simpleScorer (word) {
-   console.log(`${word.length} is your score`);
    return word.length;
 }
 
@@ -74,9 +75,20 @@ function vowelBonusScorer (word) {
    return pointTotal;
 }
 
-let scrabbleScorer;
+function scrabbleScorer (word, pointSystem) {
+   let pointTotal = 0;
+   word = word.toUpperCase().split("");
+   for (let i = 0; i < word.length; i++) {
+      for (items in pointSystem) {
+         if (word[i] === items) {
+            pointTotal += pointSystem[items];
+         }
+      }
+   }
+   return pointTotal;
+}
 
-const scoringAlgorithms = [scoringSystem3, scoringSystem2, scoringSystem1];
+
 
 function scorerPrompt(word) {
    console.log("What scoring system would you like to use?\n\n");
@@ -89,19 +101,26 @@ function scorerPrompt(word) {
    } else if (userInput === "1") {
       console.log(`Your point total is ${vowelBonusScorer(word)}`);
    } else if (userInput === "2") {
-      console.log(`${oldScrabbleScorer(word)}`);
+      console.log(`Your point total is ${scrabbleScorer(word, newPointStructure)}`);
    }
    
 };
 
-function transform() {};
+function transform (objectOfArrays) {
+   let letters = {};
+   for (items in objectOfArrays) {
+      for (let i = 0; i < objectOfArrays[items].length; i++) {
+      letters[objectOfArrays[items][i]] = Number(items);
+      }
+   }
+   return letters;
+}
 
-let newPointStructure;
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
    scorerPrompt(initialPrompt());
 }
-
 
 
 // Don't write any code below this line //
