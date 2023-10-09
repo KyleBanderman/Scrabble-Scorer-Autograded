@@ -77,7 +77,7 @@ function vowelBonusScorer (word) {
 
 function scrabbleScorer (word, pointSystem) {
    let pointTotal = 0;
-   word = word.toUpperCase().split("");
+   word = word.toLowerCase().split("");
    for (let i = 0; i < word.length; i++) {
       for (items in pointSystem) {
          if (word[i] === items) {
@@ -110,7 +110,7 @@ function transform (objectOfArrays) {
    let letters = {};
    for (items in objectOfArrays) {
       for (let i = 0; i < objectOfArrays[items].length; i++) {
-      letters[objectOfArrays[items][i]] = Number(items);
+      letters[objectOfArrays[items][i].toLowerCase()] = Number(items);
       }
    }
    return letters;
