@@ -103,14 +103,13 @@ function scorerPrompt(word) {
    } else if (userInput === "2") {
       console.log(`Your point total is ${scrabbleScorer(word, newPointStructure)}`);
    }
-   
 };
 
 function transform (objectOfArrays) {
    let letters = {};
    for (items in objectOfArrays) {
       for (let i = 0; i < objectOfArrays[items].length; i++) {
-      letters[objectOfArrays[items][i]] = Number(items);
+      letters[objectOfArrays[items][i].toLowerCase()] = Number(items);
       }
    }
    return letters;
