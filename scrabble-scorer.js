@@ -62,13 +62,13 @@ function simpleScorer (word) {
 }
 
 function vowelBonusScorer (word) {
+   let vowels = ["a", "e", "i", "o", "u"];
    let array = word.toLowerCase().split("");
    let pointTotal = 0;
    for (let i = 0; i < array.length; i++) {
-      if (array[i] === "a" || array[i] === "e" || array[i] === "i" || array[i] === "o" || array[i] === "u") {
+      if (vowels.includes(word[i])) {
          pointTotal += 3;
-      }
-      else {
+      } else {
          pointTotal++;
       }
    }
@@ -95,15 +95,22 @@ function scorerPrompt(word) {
    console.log("0 - Simple: One point per character");
    console.log("1 - Vowel Bonus: Vowels are worth 3 points");
    console.log("2 - Scrabble: Uses the scrabble scoring system");
-   userInput = input.question("What scoring system would you like to use? ");
-   if (userInput === "0") {
-      console.log(`Your point total is ${simpleScorer(word)}`);
-   } else if (userInput === "1") {
-      console.log(`Your point total is ${vowelBonusScorer(word)}`);
-   } else if (userInput === "2") {
-      console.log(`Your point total is ${scrabbleScorer(word, newPointStructure)}`);
-   }
    
+   while (0 === 0) {
+      userInput = input.question("What scoring system would you like to use? ");
+      if (userInput === "0") {
+         console.log(`Your point total is ${scoringAlgorithms[0].scorerFunction(word)}`);
+         break;
+      } else if (userInput === "1") {
+         console.log(`Your point total is ${scoringAlgorithms[1].scorerFunction(word)}`);
+         break;
+      } else if (userInput === "2") {
+         console.log(`Your point total is ${scoringAlgorithms[2].scorerFunction(word, newPointStructure)}`);
+         break;
+      } else {
+         console.log("Please enter 0, 1, or 2.");
+      }
+   }
 };
 
 function transform (objectOfArrays) {
